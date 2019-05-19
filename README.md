@@ -38,3 +38,5 @@ In lieu of a formal style guide, take care to maintain the existing coding style
 
 ## Test Coverage
 [![Build Status](https://travis-ci.org/ppeou/chunker.svg?branch=master)](https://travis-ci.org/ppeou/chunker)
+
+[![Coverage Status](https://coveralls.io/repos/github/ppeou/chunker/badge.svg?branch=master)](https://coveralls.io/github/ppeou/chunker?branch=master)
