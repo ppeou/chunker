@@ -26,7 +26,7 @@ class Chunker {
     return arr;
   }
 
-  flash() {
+  flush() {
     const items = this.items.splice(0, this.items.length);
     return this.chunkText(items.join(''), this.opts.size);
   }

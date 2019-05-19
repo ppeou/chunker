@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const {Chunker} = require('../index');
 
@@ -23,12 +25,12 @@ describe('Test chunker', function () {
     assert.equal(chunker.opts.size, 15);
   });
 
-  it('test chunker flash', () => {
+  it('test chunker flush', () => {
     const chunker = new Chunker();
     const text1 = 'hello 1';
 
     chunker.add(text1);
-    assert.equal(chunker.flash().join(''), text1);
+    assert.equal(chunker.flush().join(''), text1);
     assert.equal(chunker.items.length, 0);
   });
 
@@ -38,10 +40,10 @@ describe('Test chunker', function () {
     const text2 = 'hello 2';
 
     chunker.add(text1);
-    assert.equal(chunker.flash().join(''), text1);
+    assert.equal(chunker.flush().join(''), text1);
     chunker.add(text1);
     chunker.add(text2);
-    assert.equal(chunker.flash().join(''), [text1, text2].join(''));
+    assert.equal(chunker.flush().join(''), [text1, text2].join(''));
   });
 
   it('test chunker addLine fn (default \\n)', () => {
@@ -51,11 +53,11 @@ describe('Test chunker', function () {
     const text2 = 'hello 2';
 
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}${lineChar}`);
+    assert.equal(chunker.flush().join(''), `${text1}${lineChar}`);
     chunker.addLine(text1);
     chunker.addLine(text2);
     assert.equal(chunker.items.length, 2);
-    assert.equal(chunker.flash().join(''), [`${text1}${lineChar}`, `${text2}${lineChar}`].join(''));
+    assert.equal(chunker.flush().join(''), [`${text1}${lineChar}`, `${text2}${lineChar}`].join(''));
   });
 
   it('test chunker addLine fn (line char: \\t)', () => {
@@ -65,11 +67,11 @@ describe('Test chunker', function () {
     const text2 = 'hello 2';
 
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}${lineChar}`);
+    assert.equal(chunker.flush().join(''), `${text1}${lineChar}`);
     chunker.addLine(text1);
     chunker.addLine(text2);
     assert.equal(chunker.items.length, 2);
-    assert.equal(chunker.flash().join(''), [`${text1}${lineChar}`, `${text2}${lineChar}`].join(''));
+    assert.equal(chunker.flush().join(''), [`${text1}${lineChar}`, `${text2}${lineChar}`].join(''));
   });
 
   it('test chunker add with max-size 5', () => {
@@ -77,7 +79,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `The 1ardo2s fr3m a 4resi5ent 6ho o7 the8`;
     chunker.add(text1);
-    assert.equal(chunker.flash().join(''), text1);
+    assert.equal(chunker.flush().join(''), text1);
   });
 
   it('test chunker add with max-size 10', () => {
@@ -85,7 +87,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `The 1ardo2s fr3m a 4resi5ent 6ho o7 the8`;
     chunker.add(text1);
-    assert.equal(chunker.flash().join(''), text1);
+    assert.equal(chunker.flush().join(''), text1);
   });
 
   it('test chunker addLine with max-size 5 not-full', () => {
@@ -93,7 +95,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `this1this2this3this4this5this6this7this`; // it should return 8 array
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}\n`);
+    assert.equal(chunker.flush().join(''), `${text1}\n`);
   });
 
   it('test chunker.addLine with max-size 5 full', () => {
@@ -101,7 +103,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `this1this2this3this4this5this6this7this8`; // because newline being added via Addline, it should return 9 array
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}\n`);
+    assert.equal(chunker.flush().join(''), `${text1}\n`);
   });
 
   it('test chunker.addLine with max-size 5 not-full with special chars', () => {
@@ -109,7 +111,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `the\t1the\n2the\b3this4this5this6this7this`; // it should return 8 array
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}\n`);
+    assert.equal(chunker.flush().join(''), `${text1}\n`);
   });
 
   it('test chunker.addLine with max-size 5 full with special chars', () => {
@@ -117,7 +119,7 @@ describe('Test chunker', function () {
     const chunker = new Chunker({size});
     const text1 = `the\t1the\n2the\b3this4this5this6this7this8`; // because newline being added via Addline, it should return 9 array
     chunker.addLine(text1);
-    assert.equal(chunker.flash().join(''), `${text1}\n`);
+    assert.equal(chunker.flush().join(''), `${text1}\n`);
   });
 
   it('test chunker addLine typical scenario', () => {
@@ -132,9 +134,21 @@ describe('Test chunker', function () {
     chunker.addLine(text2);
     chunker.addLine(text3);
     chunker.addLine(text4);
-    assert.equal(chunker.flash().join(''), `${text1}${lineChar}${text2}${lineChar}${text3}${lineChar}${text4}${lineChar}`);
+    assert.equal(chunker.flush().join(''), `${text1}${lineChar}${text2}${lineChar}${text3}${lineChar}${text4}${lineChar}`);
     assert.equal(chunker.items.length, 0);
   });
 
+  it('test chunker for README.md', () => {
+
+    const chunker = new Chunker({size: 10, lineChar: '\n'});
+
+    chunker.addLine('this is my first line');
+    chunker.addLine('this is my second line');
+
+    const chunkedArray = chunker.flush();
+
+    console.log(chunkedArray);
+    assert.equal(0, 0);
+  });
 
 });
