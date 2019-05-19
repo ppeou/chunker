@@ -35,3 +35,6 @@ Chunker Class: `./index.js`
 ## Contributing
 
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
+
+## Test Coverage
+[![Build Status](https://travis-ci.org/ppeou/chunker.svg?branch=master)](https://travis-ci.org/ppeou/chunker)
