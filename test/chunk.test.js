@@ -7,11 +7,11 @@ console.clear();
 
 describe('Test chunker', function () {
   before(function() {
-    console.log(` |--> Start: ${new Date()}`);
+    console.log(` Start time: ${new Date()}`);
   });
 
   after(function() {
-    console.log(` |--> End: ${new Date()}`);
+    console.log(` End time: ${new Date()}`);
   });
 
 
@@ -146,9 +146,7 @@ describe('Test chunker', function () {
     chunker.addLine('this is my second line');
 
     const chunkedArray = chunker.flush();
-
-    console.log(chunkedArray);
-    assert.equal(0, 0);
+    assert.equal(chunkedArray.join(''), 'this is my first line\nthis is my second line\n');
   });
 
 });
