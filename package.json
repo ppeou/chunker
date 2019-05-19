@@ -1,0 +1,28 @@
+{
+  "name": "chunker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-node": "^9.0.1",
+    "mocha": "^6.1.4"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "mocha --watch --recursive ./test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppeou/chunker.git"
+  },
+  "author": "Piseth Peou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppeou/chunker/issues"
+  },
+  "homepage": "https://github.com/ppeou/chunker#readme"
+}
