@@ -24,7 +24,7 @@
     "build:watch": "rollup -c -w",
     "pretest": "rollup -c",
     "test": "mocha './test/*.js' --reporter spec --require esm",
-    "cover": "node ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec ./test/*.js",
+    "cover": "node ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec ./test/*.js --require esm",
     "test:watch": "mocha --watch --recursive ./test/*.js --require esm"
   },
   "repository": {
