@@ -1,4 +1,6 @@
-class Chunker {
+'use strict'
+
+class Chunker{
   get properties() {
     return {
       opts: {size: 10, lineChar: '\n'},
@@ -20,7 +22,7 @@ class Chunker {
 
   chunkText(str, size) {
     var arr = [];
-    for(let i = 0; i < str.length; i+=size) {
+    for (let i = 0; i < str.length; i += size) {
       arr.push(str.substr(i, size));
     }
     return arr;
@@ -36,5 +38,4 @@ class Chunker {
   }
 }
 
-
-module.exports = {Chunker};
+export default Chunker;

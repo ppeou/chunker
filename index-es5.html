@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Index ES5</title>
+  <script src="dist/chunker.js"></script>
+</head>
+
+<body>
+<div id="result"></div>
+
+<script type="text/javascript">
+
+  const chunker = new Chunker({size: 10, lineChar: '\n'});
+
+  chunker.addLine('this is my first line');
+  chunker.addLine('this is my second line');
+
+  const chunkedArray = chunker.flush();
+
+  document.getElementById('result').textContent = JSON.stringify(chunkedArray);
+
+</script>
+</body>
+
+</html>

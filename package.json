@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "dependencies": {
     "chai": "^4.2.0"
   },
@@ -10,13 +13,19 @@
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-node": "^9.0.1",
+    "esm": "^3.2.25",
     "istanbul": "^0.4.5",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "rollup": "^1.12.3"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --reporter spec",
-    "cover": "node ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec ./test/*.test.js",
-    "test:watch": "mocha --watch --recursive ./test/*.test.js"
+    "prebuild": "eslint index.js test --fix",
+    "build": "rollup -c --environment BUILD:production",
+    "build:watch": "rollup -c -w",
+    "pretest": "rollup -c",
+    "test": "mocha './test/*.js' --reporter spec --require esm",
+    "cover": "node ./node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec ./test/*.js",
+    "test:watch": "mocha --watch --recursive ./test/*.js --require esm"
   },
   "repository": {
     "type": "git",
