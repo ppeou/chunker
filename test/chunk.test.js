@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import Chunker from '../dist/chunker.js';
+import Chunker from '../index';
 
 
 describe('Test chunker', function () {
