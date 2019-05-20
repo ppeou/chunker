@@ -5,13 +5,6 @@ import Chunker from '../dist/chunker.js';
 
 
 describe('Test chunker', function () {
-  before(function() {
-  });
-
-  after(function() {
-  });
-
-
   it('test chunker initialization', () => {
     const chunker = new Chunker();
     assert.strictEqual(chunker.items.length, 0);
