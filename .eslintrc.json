@@ -3,11 +3,6 @@
   "eslint:recommended",
   "plugin:node/recommended"
 ],
-  "ecmaFeatures": {
-    "modules": true,
-    "spread": true,
-    "restParams": true
-  },
   "env": {
     "browser": true,
     "node": true,
